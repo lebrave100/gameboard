@@ -83,6 +83,16 @@ public class Gameboard extends Application {
                 matrix[playerRow][playerCol] = CellType.PLAYER;
                 drawBoard(grid);
 
+                if (lives <= 0)
+                {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Game Over");
+                    alert.setContentText("You lost all your lives!");
+                    alert.show();
+                    return; //stop everything
+                }
+
             }
             matrix[playerRow][playerCol] = CellType.PLAYER;
             drawBoard(grid);
@@ -111,19 +121,21 @@ public class Gameboard extends Application {
         matrix[1][1] = CellType.PLAYER;
         //matrix[6][5] = CellType.PRINCESS;
         //matrix[4][5] = CellType.BOMB;
-        Random random = new Random();
-        int r, c;
-        do
-        {
-            r = random.nextInt(ROWS); c = random.nextInt(COLS); }
-            while (matrix[r][c] != CellType.GRASS);
-            matrix[r][c] = CellType.PRINCESS;
 
-        do
-        {
-            r = random.nextInt(ROWS); c = random.nextInt(COLS);}
-            while (matrix[r][c] != CellType.GRASS);
-            matrix[r][c] = CellType.BOMB;
+
+        Random random4 = new Random();
+        int k;
+        int v;
+
+        do { k = random4.nextInt(ROWS); v = random4.nextInt(COLS); }
+        while (matrix[k][v] != CellType.GRASS);
+        matrix[k][v] = CellType.PRINCESS;
+
+        for (int i = 0; i < 4; i++) {
+            do { k = random4.nextInt(ROWS); v = random4.nextInt(COLS); }
+            while (matrix[k][v] != CellType.GRASS);
+            matrix[k][v] = CellType.BOMB;
+        }
     } //
 
 
@@ -155,7 +167,7 @@ public class Gameboard extends Application {
                     //=============================================================
                 }else if(matrix[row][col] == CellType.BOMB){
                     //label.setText("💣");
-                    ImageView imageView = new ImageView(new Image("/grass.png")); //hiden bomb
+                    ImageView imageView = new ImageView(new Image("/bomb.png")); //hiden bomb
                     imageView.setFitWidth(SCENE_WIDTH / COLS);
                     imageView.setFitHeight(SCENE_HEIGHT / ROWS);
                     cell.getChildren().add(imageView);
