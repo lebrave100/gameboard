@@ -2,6 +2,7 @@ package org.example.progame;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,14 +62,23 @@ public class Gameboard extends Application {
 
             if (matrix[newRow][newCol] != CellType.WALL)
             {
+                if (matrix[newRow][newCol] == CellType.PRINCESS) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Victory");
+                    alert.setContentText("You rescued the princess!");
+                    alert.show();
+                }
                 matrix[playerRow][playerCol] = CellType.GRASS;
                 playerRow = newRow;
                 playerCol = newCol;
                 matrix[playerRow][playerCol] = CellType.PLAYER;
                 drawBoard(grid);
+
             }
             matrix[playerRow][playerCol] = CellType.PLAYER;
             drawBoard(grid);
+
+
         }
 
 
