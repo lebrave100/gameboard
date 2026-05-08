@@ -25,13 +25,15 @@ public class Gameboard extends Application {
 
     // 🔹 Use "matrix" instead of "map"
     private CellType[][] matrix = new CellType[ROWS][COLS];
+    private GridPane grid;
+    private int playerRow = 1;
+    private int playerCol = 1;
 
     @Override
     public void start(Stage stage) {
 
         initMatrix();
-
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         drawBoard(grid);
 
         BorderPane root = new BorderPane();
@@ -42,7 +44,34 @@ public class Gameboard extends Application {
         stage.setTitle("Rescue the Princess");
         stage.setScene(scene);
         stage.show();
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN -> movePlayer(1, 0);
+                case RIGHT -> movePlayer(0, 1);
+                case LEFT -> movePlayer(0, -1);
+                case UP -> movePlayer(-1, 0);
+            }
+        });
     }
+
+
+        private void movePlayer(int cph, int cpv) {
+            int newRow = playerRow + cph;
+            int newCol = playerCol + cpv;
+
+            if (matrix[newRow][newCol] != CellType.WALL)
+            {
+                matrix[playerRow][playerCol] = CellType.GRASS;
+                playerRow = newRow;
+                playerCol = newCol;
+                matrix[playerRow][playerCol] = CellType.PLAYER;
+                drawBoard(grid);
+            }
+            matrix[playerRow][playerCol] = CellType.PLAYER;
+            drawBoard(grid);
+        }
+
+
 
     private void initMatrix() {
         for (int r = 0; r < ROWS; r++) {
@@ -63,23 +92,19 @@ public class Gameboard extends Application {
         matrix[1][1] = CellType.PLAYER;
         //matrix[6][5] = CellType.PRINCESS;
         //matrix[4][5] = CellType.BOMB;
-            Random random = new Random();
-            int r = random.nextInt(ROWS);
-            int c = random.nextInt(COLS);
-            if (r != 1 && c != 1) {
-            r = random.nextInt(ROWS);
-            c = random.nextInt(COLS);
+        Random random = new Random();
+        int r, c;
+        do
+        {
+            r = random.nextInt(ROWS); c = random.nextInt(COLS); }
+            while (matrix[r][c] != CellType.GRASS);
             matrix[r][c] = CellType.PRINCESS;
 
-            Random random2 = new Random();
-            int d = random2.nextInt(ROWS);
-            int f = random2.nextInt(COLS);
-            if (d != 1 && f != 1) {
-                d = random2.nextInt(ROWS);
-                f = random2.nextInt(COLS);
-            }
-            matrix[d][f] = CellType.BOMB;
-        }
+        do
+        {
+            r = random.nextInt(ROWS); c = random.nextInt(COLS);}
+            while (matrix[r][c] != CellType.GRASS);
+            matrix[r][c] = CellType.BOMB;
     }
 
 
