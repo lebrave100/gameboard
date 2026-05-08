@@ -155,7 +155,7 @@ public class Gameboard extends Application {
                     //=============================================================
                 }else if(matrix[row][col] == CellType.BOMB){
                     //label.setText("💣");
-                    ImageView imageView = new ImageView(new Image("/grass.png")); //hidden bomb
+                    ImageView imageView = new ImageView(new Image("/grass.png")); //hiden bomb
                     imageView.setFitWidth(SCENE_WIDTH / COLS);
                     imageView.setFitHeight(SCENE_HEIGHT / ROWS);
                     cell.getChildren().add(imageView);
