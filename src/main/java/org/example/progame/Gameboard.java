@@ -29,6 +29,7 @@ public class Gameboard extends Application {
     private GridPane grid;
     private int playerRow = 1;
     private int playerCol = 1;
+    private int lives = 3;
 
     @Override
     public void start(Stage stage) {
@@ -66,6 +67,14 @@ public class Gameboard extends Application {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Victory");
                     alert.setContentText("You rescued the princess!");
+                    alert.show();
+                }
+
+                if (matrix[newRow][newCol] == CellType.BOMB) {
+                    lives--;
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Bomb!");
+                    alert.setContentText("You hit a bomb! Lives remaining: " + lives);
                     alert.show();
                 }
                 matrix[playerRow][playerCol] = CellType.GRASS;
@@ -146,7 +155,7 @@ public class Gameboard extends Application {
                     //=============================================================
                 }else if(matrix[row][col] == CellType.BOMB){
                     //label.setText("💣");
-                    ImageView imageView = new ImageView(new Image("/bomb.png"));
+                    ImageView imageView = new ImageView(new Image("/grass.png")); //hidden bomb
                     imageView.setFitWidth(SCENE_WIDTH / COLS);
                     imageView.setFitHeight(SCENE_HEIGHT / ROWS);
                     cell.getChildren().add(imageView);
