@@ -105,7 +105,7 @@ public class Gameboard extends Application {
             r = random.nextInt(ROWS); c = random.nextInt(COLS);}
             while (matrix[r][c] != CellType.GRASS);
             matrix[r][c] = CellType.BOMB;
-    }
+    } //
 
 
     private void drawBoard(GridPane grid) {
